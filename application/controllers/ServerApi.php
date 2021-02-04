@@ -120,14 +120,13 @@ class ServerApi extends CI_Controller
 	public function updatePendapatan()
 	{
 		$input = $this->input->post();
-		// die(var_dump($input));
+		$data['realisasi'] = $input['realisasi'];
+		$data['bukti_setor'] = $this->do_upload('bukti_setor');
+		$data['sts'] = $this->do_upload('sts');
+		$data['status'] = 1;
+
 		$this->db->where('id_pendapatan', $input['id_pendapatan']);
-
-		unset($input['id_pendapatan']);
-		$input['bukti_setor'] = $this->do_upload('bukti_setor');
-		$input['sts'] = $this->do_upload('sts');
-
-		$q = $this->db->update('pendapatan', $input);
+		$q = $this->db->update('pendapatan', $data);
 		if ($q) {
 			$response['pesan'] = 'update berhasil';
 			$response['status'] = 200;
